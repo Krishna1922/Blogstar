@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% block title %} Blogstar - Create your unique blog {% endblock title %}
+
+{% block navbarcolor %}navbar-light{% endblock navbarcolor %}
+
+{% block body %}
+  <!--modal login-->
+  <div class="modal fade" id="SigninModal" tabindex="-1" aria-labelledby="SigninModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="SigninModalLabel">Login to Blogstar</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="post" action= "{% url 'login' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Username</label>
+              <input type="text" class="form-control" id="exampleInputEmail1" name="email1" aria-describedby="emailHelp">
+              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Password</label>
+              <input type="password" class="form-control" id="exampleInputPassword1" name="pass1">
+            </div>
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
+              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+            </div>
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+
+          </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  <!--modal login end-->
+  <!-- modal signup-->
+
+  
+  <div class="modal fade" id="SignupModal" tabindex="-1" aria-labelledby="SignupModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="SignupModalLabel">Welcome to Blogstar</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="{% url 'signup' %}" method="post">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col">
+                Enter your first name
+                <input type="text" class="form-control" id="first-name" placeholder="First name" aria-label="First name" name="fname" required>
+              </div>
+              <div class="col">
+                Enter your last name
+                <input type="text" class="form-control" id="last-name" placeholder="Last name" aria-label="Last name" name="lname" required>
+              </div>
+            </div>
+            <div class="col-auto my-4">
+              <label class="visually-hidden" for="autoSizingInputGroup">Email address</label>
+              <div class="input-group">
+                <div class="input-group-text">@</div>
+                <input type="text" class="form-control" id="autoSizingInputGroup" placeholder="email" name="email" required>
+                
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputtext" class="form-label">Username</label>
+              <input type="text" class="form-control" id="exampleInputtext" aria-describedby="textHelp" name="username" required>
+              
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Password</label>
+              <input type="password" class="form-control" id="exampleInputPassword1" name="password" required>
+            </div>
+            
+          
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Sign up</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <main>
+    <section class="site-title">
+      <div class="site-back">
+        <h1>Create your awesome Blogs</h1>
+        <h3>Puslish your blogs in a more beautiful way</h3>
+        <buttton type="button" class="btnn" data-bs-toggle="modal" data-bs-target="#SignupModal">Get started</buttton>
+      </div>
+    </section>
+
+    <section>
+      <div class="blog">
+
+      </div>
+    </section>
+  </main>
+{% endblock body %}
+

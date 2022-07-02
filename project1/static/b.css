@@ -1,0 +1,34 @@
+
+/* main-body*/
+main .site-title{
+
+    background: url('https://source.unsplash.com/1750x680/?nature');
+    background-size: cover;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+
+}
+main .site-title .site-back{
+    padding-top: 13rem;
+    text-align: center;
+    color: white;
+    padding-bottom: 0;
+}
+
+main .site-title .btnn{
+    margin: 2rem;
+    background-color:black;
+}
+.btnn{
+    border: none;
+    border-radius: 2rem;
+    padding: 0.9rem 2.2rem;
+    font-size: 1.4rem;
+    
+}
+main .site-title .btnn:hover{
+    background: transparent;
+    border-color: white;
+    border: 2.2px solid white;
+}

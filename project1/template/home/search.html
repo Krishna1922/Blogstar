@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}search results{% endblock title %}
+{% block link %}{% endblock link %}
+
+{% block js %}
+<script>
+  let ar = document.getElementsByClassName('styl');
+  Array.from(ar).forEach((element) => {
+    element.innerHTML = element.innerText
+  })
+</script>
+{% endblock js %}
+
+{% block body %}
+
+<div class="container">
+    <h2 class="my-4">Search Results :</h2>
+    {% if allposts|length < 1 %}
+        <p>Your search - <b>{{query}}</b> - did not match any posts.</p>
+    {% endif %}
+  {% for post in allposts %}
+  <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative"
+    style="user-select: auto;">
+    <div class="col p-4 d-flex flex-column position-static" style="user-select: auto;">
+      <strong class="d-inline-block mb-2 text-primary" style="user-select: auto;">World</strong>
+      <h3 class="mb-0" style="user-select: auto;">{{post.Title}}</h3>
+      <div class="mb-1 text-muted" style="user-select: auto;">{{post.Time}}</div>
+      <p class="card-text mb-auto" style="user-select: auto;">
+      <div class="styl">{{post.content |safe| truncatechars:300}}</div>
+      </p>
+      <a href="{% url 'blogPost' post.slug  %}" class="stretched-link" style="user-select: auto;">Read more</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+
+{% endblock body %}
