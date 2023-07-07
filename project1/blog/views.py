@@ -1,9 +1,10 @@
 
 from django.shortcuts import redirect, render
-from django.http import HttpResponse, request
+from django.http import HttpResponseRedirect, request
 from django.contrib.auth.decorators import login_required
 from blog.models import Blog,Comment
 from django.contrib import messages
+from .forms import CreateForm
 from blog.templatetags import extras
 
 
@@ -14,10 +15,10 @@ def blogHome(request):
     context = {'allposts': allPosts}
     
     
-    return render(request,'blog/blog.html',context)
+    return render(request,'blog.html',context)
 @login_required
-def blogPost(request, slug): 
-    post = Blog.objects.filter(slug=slug).first()
+def blogPost(request, user, pid): 
+    post = Blog.objects.filter(user=user).first()
     comment = Comment.objects.filter(Commentpost=post, parent=None)
     replies = Comment.objects.filter(Commentpost=post).exclude(parent=None) #here we got whole replies whose parent 
     # is any user but we not get replies for a particular comment so we apply a for a loop for getting a replies of a particular comment
@@ -77,7 +78,28 @@ def postComments(request):
             messages.success(request, "Your reply has been posted successfully")
         
 
-    return redirect(f"/bloghome{post.slug}")
+    return redirect(f"/bloghome/{post.sno}")
+
+def Create_Blog(request):
+    if request.method == 'POST':
+        form = CreateForm(request.POST)
+        if form.is_valid():
+            user = request.user
+            Title = form['Title'].value()
+            content = form['content'].value()
+            Tag = form['Tag'].value()
+            if(len(content) < 50):
+                messages.success(request,'content should be atleast 50 char')
+                return redirect('/')
+            BlogDetail = Blog(user = user, Title = Title, content = content, Tag = Tag)
+            BlogDetail.save()
+            messages.success(request,'Your Blog has been successfully posted!')
+            return redirect('/')
+        messages.error(request,'Fill the data correctly :(')
+        return redirect(request, '/')
+    else:
+        form = CreateForm() 
+    return render(request, "create.html", {"form": form})
 
 
 

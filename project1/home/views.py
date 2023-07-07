@@ -16,7 +16,7 @@ def index(request):
     if request.user.is_authenticated:
         post = Blog.objects.all()
         context = {'allposts' : post}
-        return render(request, 'blog/blog.html',context)
+        return render(request, 'blog.html',context)
 
     return render(request, 'home/index.html')
 
