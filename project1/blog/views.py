@@ -78,11 +78,13 @@ def Create_Blog(request):
         form = CreateForm() 
     return render(request, "create.html", {"form": form})
 
+@login_required
 def User_Profile(request, user):
     Blog_count = Blog.objects.filter(user = user).count()
     context = {
         'cnt' : Blog_count,
         'user' : user
     }
+    
     return render(request, 'profile.html', context)
 

@@ -19,7 +19,7 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-light shadow p-2">
     <div class="container-fluid">
-      {% if user.is_authenticated %}
+      {% if request.user.is_authenticated %}
       <a class="navbar-brand px-4 py-1 fs-3 color" href="{% url 'blogHome' %}">Blogstar</a>
       {% else %}
       <a class="navbar-brand px-4 py-1 fs-3 color" href="/">Blogstar</a>
@@ -30,7 +30,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav  ms-auto ">
-          {% if user.is_authenticated %}
+          {% if request.user.is_authenticated %}
           <li class="nav-item mx-2">
             <a class="nav-link fs-5 ppp " aria-current="page" href="/bloghome">Home</a>
           </li>
@@ -46,7 +46,7 @@
             <a class="nav-link fs-5 ppp" href="{% url 'contact' %}">Contact us</a>
           </li>
           
-          {% if user.is_authenticated %}
+          {% if request.user.is_authenticated %}
           <li class="nav-item mx-2">
             <div class="dropdown">
               <a class="nav-link fs-5 ppp dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown"
@@ -66,15 +66,8 @@
               data-bs-target="#SigninModal">login</a>
           </li>
           {% endif %}
-          {% if user.is_authenticated %}
-          <a href="{% url 'create' %}" style="text-decoration: none;"><i class="fa-solid fa-square-plus fs-2"></i></a>
-          <li class="nav-item mx-2">
-            <form action="{% url 'search' %}" method="get" class=" d-flex">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-          </li>
-          {% endif %}
+          {% block search %}
+          {% endblock search %}
         </ul>
       </div>
     </div>
