@@ -3,23 +3,32 @@
 {% load extras %}
 {% block title %}any post{% endblock title %}
 {% block link %}
+{% block style %}
+<style>
+    .head {
+        position: absolute;
+        left: 16%;
+        width: 70%;
+    }
+</style>
+
+{% endblock style %}
 <link href="{% static 'b.css' %}">
 <link href="{% static 'blog.css' %}">{% endblock link %}
 
 
 
 {% block body %}
-<div class="container my-4">
+
+<div class="head my-2">
     <article class="blog-post" style="user-select: auto;">
         <h2 class="blog-post-title" style="user-select: auto;">{{post.Title}}</h2>
-        <p class="blog-post-meta" style="user-select: auto;">{{post.Time}} by <a href="#"
-                style="user-select: auto;">{{post.author}}</a></p>
+        <p class="blog-post-meta" style="user-select: auto;">{{post.Time}} by <a href="{% url 'profile' user=post.user %}"
+                style="user-select: auto;">{{post.user}}</a></p>
 
         <p style="user-select: auto;">{{post.content|safe}}</p>
 
     </article>
-</div>
-<div class="container">
     <h3>
         Comments :
     </h3>
@@ -27,26 +36,27 @@
         {% csrf_token %}
         <div class="mb-2">
             <label for="exampleInputEmail1" class="form-label">Post your Comments here :</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                name="content" placeholder="enter your comment">
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="content"
+                placeholder="enter your comment">
         </div>
         <input type="hidden" name="postsno" value="{{post.pk}}">
         <input type="hidden" value="" name="parentsno">
         <button type="submit" value="submit" class="btn btn-sm btn-primary">Post</button>
     </form>
     {% for comment in comments %}
-    
-    <div class="d-flex my-1">
-        <div class="px-2"><img src="static/user.png" alt="" class="img-fluid"></div>
 
-        <div class="w-75 p-1 px-0"><b>{{comment.author}}</b><div class="size"> at
-            {{comment.Timestamp}}</div>{{comment.comment}}<br>
-            
-                <a class="text-decoration-none px-0" data-bs-toggle="collapse" href="#collapseExample{{comment.pk}}"
-                    role="button" aria-expanded="false" aria-controls="collapseExample{{comment.pk}}">
-                    Reply
-                </a>
-            
+    <div class="d-flex my-1">
+        <div class="px-2"><img src="{% static 'user.png' %}" alt="" class="img-fluid"></div>
+
+        <div class="w-75 p-1 px-0"><b>{{comment.author}}</b>
+            <div class="size"> at
+                {{comment.Timestamp}}</div>{{comment.comment}}<br>
+
+            <a class="text-decoration-none px-0" data-bs-toggle="collapse" href="#collapseExample{{comment.pk}}"
+                role="button" aria-expanded="false" aria-controls="collapseExample{{comment.pk}}">
+                Reply
+            </a>
+
             <div class="collapse" id="collapseExample{{comment.pk}}">
                 <div class="card card-body">
                     <form action="{% url 'postcomments' %}" method="post">
@@ -58,32 +68,34 @@
                             <input type="hidden" value="{{comment.pk}}" name="parentsno">
                             <input type="hidden" name="postsno" value="{{post.pk}}">
                         </div>
-                        
+
                         <button type="submit" value="submit" class="btn btn-sm btn-primary">Reply</button>
                     </form>
-                    
-                    
+
+
                 </div>
             </div>
             <div class="replies my-2 d-flex flex-column">
                 {% for reply in replyDict|get_val:comment.pk %}
                 <div class="d-flex my-2">
                     <div class="px-2">
-                        <img class="img-fluid" src="static/user.png" alt="user">
+                        <img class="img-fluid" src="{% static 'user.png' %}" alt="user">
                     </div>
                     <div class="">
                         <div class="">
-                            <b> {{reply.author}} </b> <div class="size">{{reply.Timestamp}} </div>
+                            <b> {{reply.author}} </b>
+                            <div class="size">{{reply.Timestamp}} </div>
                             <div>{{reply.comment}}</div>
                         </div>
                         <br>
                     </div>
                 </div>
                 {% endfor %}
+            </div>
         </div>
     </div>
-</div>
     {% endfor %}
 </div>
+
 
 {% endblock body %}

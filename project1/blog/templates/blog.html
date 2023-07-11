@@ -91,7 +91,7 @@
         {{post.content |safe| truncatechars:300}}
       </div>
       <div class="grid-end">
-        <a href="{% url 'blogPost' pid=post.sno %}">Read more</a>
+        <a href="{% url 'blogPost' user=post.user pid=post.sno %}">Read more</a>
       </div>
     </div>
   {% endfor %}

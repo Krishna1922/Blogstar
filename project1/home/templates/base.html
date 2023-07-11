@@ -54,8 +54,10 @@
                 {{request.user}}
               </a>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="{% url 'profile' user=request.user %}">Profile</a></li>
                 <li><a class="dropdown-item" href="{% url 'handlelogout' %}">logout</a></li>
               </ul>
+              
             </div>
           </li>
           {% else %}

@@ -18,7 +18,7 @@ def blogHome(request):
     return render(request,'blog.html',context)
 @login_required
 def blogPost(request, user, pid): 
-    post = Blog.objects.filter(user=user).first()
+    post = Blog.objects.filter(user=user, sno=pid).first()
     comment = Comment.objects.filter(Commentpost=post, parent=None)
     replies = Comment.objects.filter(Commentpost=post).exclude(parent=None) #here we got whole replies whose parent 
     # is any user but we not get replies for a particular comment so we apply a for a loop for getting a replies of a particular comment
@@ -33,31 +33,8 @@ def blogPost(request, user, pid):
     print(replyDict)
     context1 = {'post':post, 'comments':comment, 'replyDict':replyDict}
 
-    return render(request, 'blog/blogPost.html',context1)
+    return render(request, 'blogPost.html',context1)
 
-# def postcomments(request):
-#     if request.method=='POST':
-#         comment = request.POST.get("comment")
-#         user = request.user
-#         postsno = request.POST.get("postsno") #serial no.
-#         post = Post.objects.get(sno = postsno)
-#         parentsno = request.POST.get("parentsno")
-
-#         if parentsno == "":
-#             commentx = Post_comment(comment=comment, user=user, post=post)
-#             commentx.save()
-#             messages.success(request, "Your comment has been posted successfully")
-#         else:
-#             parent= Post_comment.objects.get(sno=parentsno)
-#             commentx = Post_comment(comment=comment, user=user, post=post,parent = parent)
-#             commentx.save()
-#             messages.success(request, "Your reply has been posted successfully")
-        
-
-
-#     return redirect(f"/bloghome{post.slug}")
-
-   # return render(request, 'blog/blogPost.html')
 
 def postComments(request):
     if request.method=='POST':
@@ -78,7 +55,7 @@ def postComments(request):
             messages.success(request, "Your reply has been posted successfully")
         
 
-    return redirect(f"/bloghome/{post.sno}")
+    return redirect(f"/bloghome/{post.user}/{post.sno}")
 
 def Create_Blog(request):
     if request.method == 'POST':
@@ -101,5 +78,11 @@ def Create_Blog(request):
         form = CreateForm() 
     return render(request, "create.html", {"form": form})
 
-
+def User_Profile(request, user):
+    Blog_count = Blog.objects.filter(user = user).count()
+    context = {
+        'cnt' : Blog_count,
+        'user' : user
+    }
+    return render(request, 'profile.html', context)
 
