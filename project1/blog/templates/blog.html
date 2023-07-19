@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Basic feed page{% endblock title %}
+{% block link %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Poppins:wght@500&display=swap"
+  rel="stylesheet"> {% endblock link %}
+{% block style %}
+<style>
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 5rem;
+  }
+
+  .grid-item {
+    padding: 2rem 3rem;
+    margin: 2rem;
+    border: 2px solid black;
+    text-align: center;
+  }
+
+  .grid-item-head {
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+  }
+
+  .grid-item-body {
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 1rem;
+  }
+
+  img {
+    height: 5rem;
+
+  }
+
+  .grid-img {
+    display: flex;
+    justify-content: center;
+  }
+  @media(max-width : 900px){
+    .grid{
+      display: grid;
+      grid-template-columns: 1fr;
+      padding: 0 1rem;
+    }
+    .grid-item{
+      padding: 2rem 1rem;
+    }
+    img{
+      height: 4rem;
+    }
+  }
+  @media(max-width : 900px){
+    .grid{
+      display: grid;
+      grid-template-columns: 1fr;
+      padding: 0 0.6rem;
+    }
+    .grid-item{
+      padding: 2rem 1rem;
+      margin: 1rem;
+    }
+    img{
+      height: 4rem;
+    }
+    .grid-item-body{
+      font-size: 0.9rem;
+    }
+  }
+</style>
+{% endblock style %}
+{% block js %}
+<script>
+  let ar = document.getElementsByClassName('styl');
+  Array.from(ar).forEach((element) => {
+    element.innerHTML = element.innerText
+  })
+</script>
+{% endblock js %}
+
+{% block search %}
+{% if request.user.is_authenticated %}
+<a href="{% url 'create' %}" style="text-decoration: none;"><i class="fa-solid fa-square-plus fs-2"></i></a>
+<li class="nav-item mx-2">
+  <form action="{% url 'search' %}" method="get" class=" d-flex">
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query">
+    <button class="btn btn-outline-success" type="submit">Search</button>
+  </form>
+</li>
+{% endif %}
+{% endblock search %}
+
+{% block body %}
+
+<div class="grid">
+  {% for post in allposts %}
+  <div class="grid-item">
+    <div class="grid-item-head">
+      <div class="grid-img">
+        <img src="{% static 'profile.png' %}" alt="">
+      </div>
+      <h3>{{ post.Title }}</h3>
+
+    </div>
+    <p>{{post.Time}}</p>
+    <div class="grid-item-body">
+      {{post.content |safe| truncatechars:300}}
+    </div>
+    <div class="grid-end">
+      <a href="{% url 'blogPost' user=post.user pid=post.sno %}">Read more</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="css-1vs2kf0" data-testid="editor-canvas-artboard">
+
+</div>
+
+{% endblock body %}

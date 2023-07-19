@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}search results{% endblock title %}
+{% block link %}{% endblock link %}
+{% block style %}
+<style>
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 5rem;
+  }
+
+  .grid-item {
+    padding: 2rem 3rem;
+    margin: 2rem;
+    border: 2px solid black;
+    text-align: center;
+  }
+
+  .grid-item-head {
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+  }
+
+  .grid-item-body {
+    text-align: center;
+    font-family: sans-serif;
+    font-size: large;
+  }
+
+  img {
+    height: 5rem;
+
+  }
+
+  .grid-img {
+    display: flex;
+    justify-content: center;
+  }
+  @media(max-width : 900px){
+    .grid{
+      display: grid;
+      grid-template-columns: 1fr;
+      padding: 0 1rem;
+    }
+    .grid-item{
+      padding: 2rem 1rem;
+    }
+    img{
+      height: 4rem;
+    }
+  }
+  @media(max-width : 900px){
+    .grid{
+      display: grid;
+      grid-template-columns: 1fr;
+      padding: 0 0.6rem;
+    }
+    .grid-item{
+      padding: 2rem 1rem;
+      margin: 1rem;
+    }
+    img{
+      height: 4rem;
+    }
+    .grid-item-body{
+      font-size: 0.9rem;
+    }
+  }
+</style>
+{% endblock style %}
+
+{% block body %}
+
+<div class="grid">
+  {% for post in allposts %}
+  <div class="grid-item">
+    <div class="grid-item-head">
+      <div class="grid-img">
+        <img src="{% static 'profile.png' %}" alt="">
+      </div>
+      <h3>{{ post.Title }}</h3>
+
+    </div>
+    <p>{{post.Time}}</p>
+    <div class="grid-item-body">
+      {{post.content |safe| truncatechars:300}}
+    </div>
+    <div class="grid-end">
+      <a href="{% url 'blogPost' user=post.user pid=post.sno %}">Read more</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+
+{% endblock body %}
