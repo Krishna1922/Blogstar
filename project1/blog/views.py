@@ -86,7 +86,8 @@ def User_Profile(request, user):
             f = User_profile(user = request.user, profile = img)
             f.save()
         else:
-            U.profile = img
+            # U.profile = img
+            pass
     context = {
         'cnt' : Blog_count,
         'user' : user
