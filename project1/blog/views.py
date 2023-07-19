@@ -1,11 +1,9 @@
-
 from django.shortcuts import redirect, render
-from django.http import HttpResponseRedirect, request
 from django.contrib.auth.decorators import login_required
 from blog.models import Blog,Comment
+from home.models import User_profile
 from django.contrib import messages
 from .forms import CreateForm
-from blog.templatetags import extras
 
 
 @login_required
@@ -81,6 +79,14 @@ def Create_Blog(request):
 @login_required
 def User_Profile(request, user):
     Blog_count = Blog.objects.filter(user = user).count()
+    U = User_profile.objects.filter(user = request.user)
+    if request.method == 'POST':
+        if not U:
+            img = request.POST.get('user_profile')
+            f = User_profile(user = request.user, profile = img)
+            f.save()
+        else:
+            U.profile = img
     context = {
         'cnt' : Blog_count,
         'user' : user

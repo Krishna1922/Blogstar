@@ -30,7 +30,7 @@
   .grid-item-body {
     text-align: center;
     font-family: sans-serif;
-    font-size: large;
+    font-size: 1rem;
   }
 
   img {
@@ -41,6 +41,36 @@
   .grid-img {
     display: flex;
     justify-content: center;
+  }
+  @media(max-width : 900px){
+    .grid{
+      display: grid;
+      grid-template-columns: 1fr;
+      padding: 0 1rem;
+    }
+    .grid-item{
+      padding: 2rem 1rem;
+    }
+    img{
+      height: 4rem;
+    }
+  }
+  @media(max-width : 900px){
+    .grid{
+      display: grid;
+      grid-template-columns: 1fr;
+      padding: 0 0.6rem;
+    }
+    .grid-item{
+      padding: 2rem 1rem;
+      margin: 1rem;
+    }
+    img{
+      height: 4rem;
+    }
+    .grid-item-body{
+      font-size: 0.9rem;
+    }
   }
 </style>
 {% endblock style %}

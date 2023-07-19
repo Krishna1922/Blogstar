@@ -150,7 +150,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static')
 ]
-  
+# for user profile  
+MEDIA_URL = '/user_profile/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/user_profile')
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 

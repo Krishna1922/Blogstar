@@ -14,6 +14,16 @@
   <script src="https://kit.fontawesome.com/9a58c5dfe3.js" crossorigin="anonymous"></script>
   {% block link %} {% endblock link %}
   {% block style %} {% endblock style %}
+  <style>
+    #toasts {
+      position: fixed;
+      right: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      z-index: 1000;
+    }
+  </style>
 </head>
 
 <body>
@@ -76,10 +86,11 @@
   <!---->
   {% if messages %}
   {% for message in messages %}
-  <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+  {% comment %} <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
     <strong>Message : </strong> {{ message }}
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
+  </div> {% endcomment %}
+  <div id="toasts" class="alert alert-{{ message.tags }}">Message : </strong> {{ message }}</div>
   {% endfor %}
   {% endif %}
 
@@ -90,6 +101,17 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"></script>
+    <script>
+      const toasts = document.getElementById('toasts')
+      createNotification()
+      function createNotification() {
+          setTimeout(() => {
+              toasts.remove()
+          }, 3000)
+      }
+    
+
+      </script>
   
 </body>
 

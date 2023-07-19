@@ -15,6 +15,10 @@ class contact(models.Model):
     def __str__(self):
         return  'Message from ' + self.Name
 
+class User_profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    profile = models.ImageField(default='profile.png', upload_to='')
+
 class Signup(models.Model):
     fname = models.CharField(max_length=50)
     lname = models.CharField(max_length=50)
@@ -22,6 +26,7 @@ class Signup(models.Model):
     username = models.CharField(max_length=50)
     password = models.CharField(max_length=50)
     Time = models.TimeField(auto_now_add=True,blank=True)
+    profile = models.ImageField(upload_to='', default='profile.png')
 
     def __str__(self):
         return 'signup of' + self.fname

@@ -21,14 +21,18 @@
 {% block body %}
 <div class="txt">
     <div class="text">
-        <!-- <div class="text-1"> -->
-            <img src="{% static 'profile.png' %}" alt="">
-        <!-- </div>  -->
+        
+        <img src="{% static 'profile.png' %}" alt="">
         <div class="text-2">
             <h4>{{user}}</h3>
             Blogs publushed: {{cnt}}
         </div>
     </div>
+    <form action="" method="post" class="d-flex align-items-center justify-content-center">
+        {% csrf_token %}
+        <input type="file" name="user_profile" id="">
+        <button>upload</button>
+    </form>
 </div>
     
 {% endblock body %}
