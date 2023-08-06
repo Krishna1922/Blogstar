@@ -90,8 +90,12 @@ WSGI_APPLICATION = 'project1.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME':'railway',
+        'USER':'postgres',
+        'PASSWORD': 'h9CWD5DZh8yc87U5AYAz',
+        'HOST':'containers-us-west-172.railway.app',
+        'PORT':'5736'
     }
 }
 # core/settings.py
@@ -150,6 +154,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static')
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 # for user profile  
 MEDIA_URL = '/user_profile/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/user_profile')
